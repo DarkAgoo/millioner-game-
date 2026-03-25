@@ -4,7 +4,7 @@
 import random, sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from questions.questions import get_questions
+from questions.questions import get_questions, get_infinite_questions
 from settings.config import DIFFICULTIES, INFINITE_REWARDS
 from settings.storage import load_balance, add_balance, reset_balance, fmt_money
 
@@ -25,12 +25,7 @@ class GameSession:
         self.index = 0
 
         if difficulty == "infinite":
-            all_q = (
-                [dict(q, diff="easy")   for q in get_questions(lang, "easy")] +
-                [dict(q, diff="medium") for q in get_questions(lang, "medium")] +
-                [dict(q, diff="hard")   for q in get_questions(lang, "hard")]
-            )
-            self._pool = _shuffle(all_q)
+            self._pool = _shuffle(get_infinite_questions(lang))
         else:
             self._pool = _shuffle(get_questions(lang, difficulty))
 
@@ -38,12 +33,7 @@ class GameSession:
     def current_question(self):
         if self.difficulty == "infinite":
             while self.index >= len(self._pool):
-                all_q = (
-                    [dict(q, diff="easy")   for q in get_questions(self.lang, "easy")] +
-                    [dict(q, diff="medium") for q in get_questions(self.lang, "medium")] +
-                    [dict(q, diff="hard")   for q in get_questions(self.lang, "hard")]
-                )
-                self._pool += _shuffle(all_q)
+                self._pool += _shuffle(get_infinite_questions(self.lang))
             return self._pool[self.index]
         if self.index >= len(self._pool):
             return None
@@ -51,7 +41,7 @@ class GameSession:
 
     @property
     def total_questions(self):
-        return DIFFICULTIES[self.difficulty]["questions"]  # None = infinite
+        return DIFFICULTIES[self.difficulty]["questions"]
 
     @property
     def balance(self):
