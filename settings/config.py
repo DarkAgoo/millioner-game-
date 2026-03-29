@@ -30,8 +30,8 @@ DIFFICULTIES = {
     "infinite": {
         "questions": None,   # бесконечно
         "reward": None,      # зависит от сложности вопроса
-        "lives": 2,
-        "unlock": 0,
+        "lives": 1,
+        "unlock": 75_000_000,
         "color": "#a78bfa",
         "diff_key": "diff_infinite",
     },
@@ -45,9 +45,8 @@ INFINITE_REWARDS = {
 }
 
 AUTHORS = [
-    ("Главный разработчик", "Архитектура и движок"),
-    ("Дизайнер игры",       "Механики и UI"),
-    ("Автор вопросов",      "Вопросы и ответы"),
+    ("Вчитель", "Побута Владислав"),
+    ("Головний розробник",       "Подиняк Марк"),
 ]
 
 SAVE_FILE = "settings/save.json"
